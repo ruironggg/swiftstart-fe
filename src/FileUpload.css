@@ -77,8 +77,20 @@
   transform: translateY(1px);
 }
 
-.file-upload__button {
+.browse-files__button {
   background-color: #4caf50;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-file__button {
+  background-color: blue;
   color: #fff;
   font-size: 18px;
   font-weight: bold;

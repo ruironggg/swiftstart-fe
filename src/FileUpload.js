@@ -2,12 +2,12 @@ import React, { useState, useRef } from 'react';
 import './FileUpload.css';
 
 const FileUpload = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState('');
   const fileInputRef = useRef(null);
 
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-  
+  const submitFile = (event) => {
+    console.log('handlefilechange occurs')
+
     // Create a new FormData object and append the selected file
     const formData = new FormData();
     formData.append('file', selectedFile);
@@ -56,9 +56,12 @@ const FileUpload = () => {
           type="file"
           multiple
           ref={fileInputRef}
-          onChange={handleFileChange}
+          // onChange={handleFileChange}
         />
-        <button className="file-upload__button" onClick={handleBrowseClick}>
+        <button className="upload-file__button" onClick={submitFile}>
+          Upload file
+        </button>
+        <button className="browse-files__button" onClick={handleBrowseClick}>
           Browse Files
         </button>
       </div>
