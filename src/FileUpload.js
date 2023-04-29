@@ -49,38 +49,41 @@ const FileUpload = () => {
   };
 
   return (
-      <div style={{display: "flex"}}>
-        <div className="file-upload">
-          <div
-            className="file-upload__instructions"
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-          >
-            <p>Drag and drop files here or click below to select files</p>
-            <input
-              type="file"
-              multiple
-              ref={fileInputRef}
-              onChange={handleFileSelect}
-            />
-            <div className="button-container">
-              <button className="browse-files__button" onClick={handleBrowseClick}>
-                Browse Files
-              </button>
-              <button className="upload-file__button" onClick={submitFile}>
-                Upload file
-              </button>
-            </div>
+    <div style={{ display: "flex" }}>
+      <div className="file-upload">
+        <div
+          className="file-upload__instructions"
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+        >
+          <p>Drag and drop files here or click below to select files</p>
+          <input
+            type="file"
+            multiple
+            ref={fileInputRef}
+            onChange={handleFileSelect}
+          />
+          <div className="button-container">
+            <button
+              className="browse-files__button"
+              onClick={handleBrowseClick}
+            >
+              Browse Files
+            </button>
+            <button className="upload-file__button" onClick={submitFile}>
+              Upload file
+            </button>
           </div>
-          {selectedFile && (
-            <div className="file-upload__file-selected">
-              <div>{selectedFile.name}</div>
-              <button onClick={handleRemoveClick}>Remove</button>
-            </div>
-          )}
         </div>
-        <div style={{display: 'flex', flex: 1, width: '50%'}}>Test</div>
+        {selectedFile && (
+          <div className="file-upload__file-selected">
+            <div>{selectedFile.name}</div>
+            <button onClick={handleRemoveClick}>Remove</button>
+          </div>
+        )}
       </div>
+      <div style={{ display: "flex", flex: 1, width: "50%" }}>Test</div>
+    </div>
   );
 };
 
