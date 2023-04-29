@@ -56,20 +56,20 @@ const FileUpload = () => {
         onDragOver={handleDragOver}
       >
         <p>Drag and drop files here or click below to select files</p>
-        <div className="button-container">
-          <button className="upload-file__button" onClick={submitFile}>
-            Upload file
-          </button>
-          <button className="browse-files__button" onClick={handleBrowseClick}>
-            Browse Files
-          </button>
-        </div>
         <input
           type="file"
           multiple
           ref={fileInputRef}
           onChange={handleFileSelect}
         />
+        <div className="button-container">
+          <button className="browse-files__button" onClick={handleBrowseClick}>
+            Browse Files
+          </button>
+          <button className="upload-file__button" onClick={submitFile}>
+            Upload file
+          </button>
+        </div>
       </div>
       {selectedFile && (
         <div className="file-upload__file-selected">
@@ -79,7 +79,6 @@ const FileUpload = () => {
       )}
     </div>
   );
-  
 };
 
 export default FileUpload;
