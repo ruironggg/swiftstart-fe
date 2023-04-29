@@ -6,7 +6,7 @@ const FileUpload = () => {
   const fileInputRef = useRef(null);
 
   const submitFile = (event) => {
-    console.log('handlefilechange occurs')
+    console.log('submitFile occurs')
 
     // Create a new FormData object and append the selected file
     const formData = new FormData();
