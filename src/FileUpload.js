@@ -1,90 +1,71 @@
-import React, { useState, useRef } from "react";
-import "./FileUpload.css";
+import React, { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 
 const FileUpload = () => {
-  const [selectedFile, setSelectedFile] = useState("");
-  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileSelect = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
+  const onDrop = useCallback((acceptedFiles, fileRejections) => {
+    console.log({ acceptedFiles, fileRejections });
+    setSelectedFile(acceptedFiles[0]);
+  }, []);
 
-  const submitFile = (event) => {
-    console.log("submitFile occurs");
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "application/zip": [".zip"],
+    },
+  });
 
-    // Create a new FormData object and append the selected file
+  const handleUpload = async () => {
+    if (!selectedFile) return;
+
     const formData = new FormData();
     formData.append("file", selectedFile);
 
-    // Send a fetch request to the server
-    fetch("http://localhost:5000/generate-documentation", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log(data);
-        // Do something with the response data
-      })
-      .catch((error) => console.error(error));
-  };
+    // Replace with your desired upload endpoint.
+    const uploadUrl = "https://your-upload-endpoint.com";
 
-  const handleDrop = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setSelectedFile(event.dataTransfer.files[0]);
-  };
+    try {
+      const response = await fetch(uploadUrl, {
+        method: "POST",
+        body: formData,
+      });
 
-  const handleDragOver = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-  };
-
-  const handleRemoveClick = () => {
-    setSelectedFile(null);
-  };
-
-  const handleBrowseClick = () => {
-    fileInputRef.current.click();
+      if (response.ok) {
+        alert("File uploaded successfully.");
+      } else {
+        alert("Error uploading file.");
+      }
+    } catch (error) {
+      console.error("Upload Error:", error);
+    }
   };
 
   return (
-    <div style={{ display: "flex" }}>
-      <div className="file-upload">
-        <div
-          className="file-upload__instructions"
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-        >
-          <p>Drag and drop files here or click below to select files</p>
-          <input
-            type="file"
-            multiple
-            ref={fileInputRef}
-            onChange={handleFileSelect}
-          />
-          <div className="button-container">
-            <button
-              className="browse-files__button"
-              onClick={handleBrowseClick}
-            >
-              Browse Files
-            </button>
-            <button className="upload-file__button" onClick={submitFile}>
-              Upload file
-            </button>
-          </div>
-        </div>
-        {selectedFile && (
-          <div className="file-upload__file-selected">
-            <div>{selectedFile.name}</div>
-            <button onClick={handleRemoveClick}>Remove</button>
-          </div>
+    <div className="flex flex-col items-center">
+      <div
+        {...getRootProps()}
+        className={`w-full h-64 flex flex-col items-center justify-center border-4 border-dashed border-gray-400 rounded-lg ${
+          isDragActive ? "bg-gray-100" : "bg-white"
+        }`}
+      >
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <p className="text-gray-600 font-semibold">
+            Drop the .zip file here...
+          </p>
+        ) : (
+          <p className="text-gray-600 font-semibold">
+            Drag 'n' drop a .zip file here, or click to select a file
+          </p>
         )}
       </div>
-      <div style={{ display: "flex", flex: 1, width: "50%" }}>
-        <button>Sign in with Github</button>
-      </div>
+      <button
+        onClick={handleUpload}
+        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Upload
+      </button>
     </div>
   );
 };
