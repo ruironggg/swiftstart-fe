@@ -82,7 +82,9 @@ const FileUpload = () => {
           </div>
         )}
       </div>
-      <div style={{ display: "flex", flex: 1, width: "50%" }}>Test</div>
+      <div style={{ display: "flex", flex: 1, width: "50%" }}>
+        <button>Sign in with Github</button>
+      </div>
     </div>
   );
 };
