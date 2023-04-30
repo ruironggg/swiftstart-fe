@@ -64,6 +64,7 @@ const FileUpload = () => {
         .then((data) => {
           console.log(data);
           setGeneratedLink(data);
+          alert("Documentation generated successfully!");
           // Do something with the response data
         })
         .catch((error) => console.error(error));
@@ -76,6 +77,7 @@ const FileUpload = () => {
         .then((data) => {
           console.log(data);
           setGeneratedLink(data);
+          alert("Documentation generated successfully!");
           // Do something with the response data
         })
         .catch((error) => console.error(error));
