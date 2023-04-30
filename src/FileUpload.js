@@ -8,6 +8,7 @@ const FileUpload = () => {
   const [pageTitle, setPageTitle] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [generatedLink, setGeneratedLink] = useState(null);
 
   function handleOptionChange(event) {
     setCreateOrUpdate(event.target.value);
@@ -44,6 +45,7 @@ const FileUpload = () => {
         .then((response) => response.text())
         .then((data) => {
           console.log(data);
+          setGeneratedLink(data)
           // Do something with the response data
         })
         .catch((error) => console.error(error));
@@ -55,7 +57,8 @@ const FileUpload = () => {
         .then((response) => response.text())
         .then((data) => {
           console.log(data);
-          // Do something with the response data
+          setGeneratedLink(data)
+            // Do something with the response data
         })
         .catch((error) => console.error(error));
     } else {
@@ -147,9 +150,6 @@ const FileUpload = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
                     d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                   ></path>
                 </svg>
@@ -171,12 +171,31 @@ const FileUpload = () => {
           )}
         </label>
       </div>
-      <button
+        <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
+            <div className="flex">
+                <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M17 10a7 7 0 11-14 0 7 7 0 0114 0zm-2.707-1.293a1 1 0 00-1.414 0L9 12.586l-2.293-2.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l7-7a1 1 0 000-1.414z" clipRule="evenodd" />
+                    </svg>
+                </div>
+                <div className="ml-3">
+                    <p className="text-sm leading-5 font-medium text-green-800">
+                        As this may take a while to process, you will receive an email with the completed page.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <button
         onClick={handleUpload}
         className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
         Upload
       </button>
+        {generatedLink && <button onClick={() => {window.open(generatedLink, "_blank")}} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+            View the page
+        </button>
+        }
     </div>
   );
 };
