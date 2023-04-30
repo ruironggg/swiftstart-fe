@@ -99,7 +99,7 @@ const FileUpload = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-col md:flex-row justify-between md:space-x-4 space-y-4 md:space-y-0">
+      <div className="flex flex-col md:flex-row justify-between md:space-x-4 space-y-4 md:space-y-0 w-full">
         <div className="flex-1">
           <label
             htmlFor="name"
@@ -111,7 +111,7 @@ const FileUpload = () => {
             id="name"
             type="text"
             placeholder="Enter your name"
-            className="border border-gray-400 p-2 w-full rounded-lg"
+            className="border border-gray-400 p-1 text-sm w-full rounded-lg"
             value={userName}
             onChange={(event) => setUserName(event.target.value)}
           />
@@ -127,13 +127,13 @@ const FileUpload = () => {
             id="email"
             type="text"
             placeholder="Enter your email"
-            className="border border-gray-400 p-2 w-full rounded-lg"
+            className="border border-gray-400 p-1 text-sm w-full rounded-lg"
             value={userEmail}
             onChange={(event) => setUserEmail(event.target.value)}
           />
         </div>
       </div>
-      <div className="flex flex-col md:flex-row justify-between md:space-x-4 space-y-4 md:space-y-0">
+      <div className="flex flex-col md:flex-row justify-between md:space-x-4 space-y-4 md:space-y-0 w-full">
         <div className="flex-1">
           <label
             htmlFor="job-title"
@@ -145,7 +145,7 @@ const FileUpload = () => {
             id="job-title"
             type="text"
             placeholder="Enter your job title"
-            className="border border-gray-400 p-2 w-full rounded-lg"
+            className="border border-gray-400 p-1 text-sm w-full rounded-lg"
             value={jobTitle}
             onChange={(event) => setJobTitle(event.target.value)}
           />
@@ -161,7 +161,7 @@ const FileUpload = () => {
             id="page-title"
             type="text"
             placeholder="Enter your page title"
-            className="border border-gray-400 p-2 w-full rounded-lg"
+            className="border border-gray-400 p-1 text-sm w-full rounded-lg"
             value={pageTitle}
             onChange={(event) => setPageTitle(event.target.value)}
           />
@@ -229,7 +229,7 @@ const FileUpload = () => {
                     <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                   </svg>
                 )}
-                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <p className="mb-2 text-2xl text-gray-500 dark:text-gray-400">
                   {selectedFile ? (
                     <>
                       <span className="font-semibold">File Uploaded</span>:{" "}
@@ -276,9 +276,9 @@ const FileUpload = () => {
             </svg>
           </div>
           <div className="ml-3">
-            <p className="text-sm leading-5 font-medium text-green-800">
+            <p className="text-xs leading-5 font-medium text-green-800">
               As this process may take a while, you will receive an email with a
-              link to your Confluence page once it has been created.
+              link to your Confluence page after it has been created.
             </p>
           </div>
         </div>
@@ -286,7 +286,7 @@ const FileUpload = () => {
 
       <button
         onClick={handleUpload}
-        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-20 text-lg rounded focus:outline-none focus:shadow-outline"
       >
         Upload
       </button>
