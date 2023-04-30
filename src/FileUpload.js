@@ -54,7 +54,7 @@ const FileUpload = () => {
         .then((response) => response.text())
         .then((data) => {
           console.log(data);
-          setGeneratedLink(data)
+          setGeneratedLink(data);
           // Do something with the response data
         })
         .catch((error) => console.error(error));
@@ -66,8 +66,8 @@ const FileUpload = () => {
         .then((response) => response.text())
         .then((data) => {
           console.log(data);
-          setGeneratedLink(data)
-            // Do something with the response data
+          setGeneratedLink(data);
+          // Do something with the response data
         })
         .catch((error) => console.error(error));
     } else {
@@ -76,57 +76,82 @@ const FileUpload = () => {
     setIsLoading(false);
   };
 
+  const bytesToMegabytes = (bytes) => {
+    const megabytes = bytes / 1000000;
+    return Math.trunc(megabytes * 1000) / 1000;
+  };
+
   return (
     <div className="flex flex-col items-center">
-        <div className="flex flex-col md:flex-row justify-between md:space-x-4 space-y-4 md:space-y-0">
-            <div className="flex-1">
-                <label htmlFor="name" className="block font-medium text-gray-700 mb-2">Name</label>
-                <input
-                    id="name"
-                    type="text"
-                    placeholder="Enter your name"
-                    className="border border-gray-400 p-2 w-full rounded-lg"
-                    value={userName}
-                    onChange={(event) => setUserName(event.target.value)}
-                />
-            </div>
-            <div className="flex-1">
-                <label htmlFor="email" className="block font-medium text-gray-700 mb-2">Email</label>
-                <input
-                    id="email"
-                    type="text"
-                    placeholder="Enter your email"
-                    className="border border-gray-400 p-2 w-full rounded-lg"
-                    value={userEmail}
-                    onChange={(event) => setUserEmail(event.target.value)}
-                />
-            </div>
+      <div className="flex flex-col md:flex-row justify-between md:space-x-4 space-y-4 md:space-y-0">
+        <div className="flex-1">
+          <label
+            htmlFor="name"
+            className="block font-medium text-gray-700 mb-2"
+          >
+            Name
+          </label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Enter your name"
+            className="border border-gray-400 p-2 w-full rounded-lg"
+            value={userName}
+            onChange={(event) => setUserName(event.target.value)}
+          />
         </div>
-        <div className="flex flex-col md:flex-row justify-between md:space-x-4 space-y-4 md:space-y-0">
-            <div className="flex-1">
-                <label htmlFor="job-title" className="block font-medium text-gray-700 mb-2">Job Title</label>
-                <input
-                    id="job-title"
-                    type="text"
-                    placeholder="Enter your job title"
-                    className="border border-gray-400 p-2 w-full rounded-lg"
-                    value={jobTitle}
-                    onChange={(event) => setJobTitle(event.target.value)}
-                />
-            </div>
-            <div className="flex-1">
-                <label htmlFor="page-title" className="block font-medium text-gray-700 mb-2">Page Title</label>
-                <input
-                    id="page-title"
-                    type="text"
-                    placeholder="Enter your page title"
-                    className="border border-gray-400 p-2 w-full rounded-lg"
-                    value={pageTitle}
-                    onChange={(event) => setPageTitle(event.target.value)}
-                />
-            </div>
+        <div className="flex-1">
+          <label
+            htmlFor="email"
+            className="block font-medium text-gray-700 mb-2"
+          >
+            Email
+          </label>
+          <input
+            id="email"
+            type="text"
+            placeholder="Enter your email"
+            className="border border-gray-400 p-2 w-full rounded-lg"
+            value={userEmail}
+            onChange={(event) => setUserEmail(event.target.value)}
+          />
         </div>
-        <div className="flex items-center mt-2">
+      </div>
+      <div className="flex flex-col md:flex-row justify-between md:space-x-4 space-y-4 md:space-y-0">
+        <div className="flex-1">
+          <label
+            htmlFor="job-title"
+            className="block font-medium text-gray-700 mb-2"
+          >
+            Job Title
+          </label>
+          <input
+            id="job-title"
+            type="text"
+            placeholder="Enter your job title"
+            className="border border-gray-400 p-2 w-full rounded-lg"
+            value={jobTitle}
+            onChange={(event) => setJobTitle(event.target.value)}
+          />
+        </div>
+        <div className="flex-1">
+          <label
+            htmlFor="page-title"
+            className="block font-medium text-gray-700 mb-2"
+          >
+            Page Title
+          </label>
+          <input
+            id="page-title"
+            type="text"
+            placeholder="Enter your page title"
+            className="border border-gray-400 p-2 w-full rounded-lg"
+            value={pageTitle}
+            onChange={(event) => setPageTitle(event.target.value)}
+          />
+        </div>
+      </div>
+      <div className="flex items-center mt-2">
         <label className="inline-flex items-center mr-6">
           <input
             type="radio"
@@ -159,7 +184,7 @@ const FileUpload = () => {
       >
         <label
           className={`${
-            isDragActive ? "bg-gray-100" : "bg-white"
+            isDragActive || selectedFile ? "bg-gray-100" : "bg-white"
           } flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600`}
         >
           {isLoading ? (
@@ -170,20 +195,26 @@ const FileUpload = () => {
             <>
               <input {...getInputProps()} />
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                <svg
-                  aria-hidden="true"
-                  className="w-10 h-10 mb-3 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                  ></path>
-                </svg>
+                {/* only show the upload file icon if there is no file selected */}
+                {!selectedFile && (
+                  <svg
+                    aria-hidden="true"
+                    className="w-10 h-10 mb-3 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                  </svg>
+                )}
                 <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                  {isDragActive ? (
+                  {selectedFile ? (
+                    <>
+                      <span className="font-semibold">File Uploaded</span>:{" "}
+                      {selectedFile.path}
+                    </>
+                  ) : isDragActive ? (
                     "Drop the .zip file here..."
                   ) : (
                     <>
@@ -193,38 +224,61 @@ const FileUpload = () => {
                   )}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  SVG, PNG, JPG or GIF (MAX. 800x400px)
+                  {selectedFile ? (
+                    <>
+                      <span className="font-semibold">File Size</span>:{" "}
+                      {/* truncate the file to 3 decimal places */}
+                      {bytesToMegabytes(selectedFile.size)}MB
+                    </>
+                  ) : (
+                    "ZIP (MAX. 100MB)"
+                  )}
                 </p>
               </div>
             </>
           )}
         </label>
       </div>
-        <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
-            <div className="flex">
-                <div className="flex-shrink-0">
-                    <svg className="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M17 10a7 7 0 11-14 0 7 7 0 0114 0zm-2.707-1.293a1 1 0 00-1.414 0L9 12.586l-2.293-2.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l7-7a1 1 0 000-1.414z" clipRule="evenodd" />
-                    </svg>
-                </div>
-                <div className="ml-3">
-                    <p className="text-sm leading-5 font-medium text-green-800">
-                        As this may take a while to process, you will receive an email with the completed page.
-                    </p>
-                </div>
-            </div>
+      <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
+        <div className="flex">
+          <div className="flex-shrink-0">
+            <svg
+              className="h-5 w-5 text-green-500"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M17 10a7 7 0 11-14 0 7 7 0 0114 0zm-2.707-1.293a1 1 0 00-1.414 0L9 12.586l-2.293-2.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l7-7a1 1 0 000-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+          <div className="ml-3">
+            <p className="text-sm leading-5 font-medium text-green-800">
+              As this process may take a while, you will receive an email with a
+              link to your Confluence page once it has been created.
+            </p>
+          </div>
         </div>
+      </div>
 
-        <button
+      <button
         onClick={handleUpload}
         className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
         Upload
       </button>
-        {generatedLink && <button onClick={() => {window.open(generatedLink, "_blank")}} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-            View the page
+      {generatedLink && (
+        <button
+          onClick={() => {
+            window.open(generatedLink, "_blank");
+          }}
+          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
+        >
+          View the page
         </button>
-        }
+      )}
     </div>
   );
 };
