@@ -56,7 +56,7 @@ const FileUpload = () => {
     console.log(formData);
 
     if (createOrUpdate === "create") {
-      fetch("http://localhost:5000/create-confluence-page", {
+      await fetch("http://localhost:5000/create-confluence-page", {
         method: "POST",
         body: formData,
       })
@@ -68,7 +68,7 @@ const FileUpload = () => {
         })
         .catch((error) => console.error(error));
     } else if (createOrUpdate === "update") {
-      fetch("http://localhost:5000/update-confluence-page", {
+      await fetch("http://localhost:5000/update-confluence-page", {
         method: "POST",
         body: formData,
       })
@@ -204,8 +204,13 @@ const FileUpload = () => {
           } flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600`}
         >
           {isLoading ? (
-            <div className={`flex justify-center items-center`}>
-              <PacmanLoader color={"#06d6a0"} loading={isLoading} />
+            <div
+              className={`flex flex-col justify-center items-center h-screen`}
+            >
+              <PacmanLoader color={"#06d6a0"} loading={true} />
+              <p className="text-center mt-4 text-[#06d6a0] font-medium">
+                Generating documentation...
+              </p>
             </div>
           ) : (
             <>
