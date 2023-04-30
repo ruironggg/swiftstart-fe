@@ -7,6 +7,8 @@ const FileUpload = () => {
   const [createOrUpdate, setCreateOrUpdate] = useState("");
   const [pageTitle, setPageTitle] = useState("");
   const [jobTitle, setJobTitle] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [generatedLink, setGeneratedLink] = useState(null);
 
@@ -29,13 +31,20 @@ const FileUpload = () => {
   });
 
   const handleUpload = async () => {
-    if (selectedFile === "") return;
+    if (selectedFile === "") {
+      alert("Please select a file.");
+      return;
+    }
     setIsLoading(true);
 
     const formData = new FormData();
     formData.append("file", selectedFile);
+    formData.append("name", userName);
+    formData.append("email", userEmail);
     formData.append("page_title", pageTitle);
     formData.append("job_title", jobTitle);
+
+    console.log(formData);
 
     if (createOrUpdate === "create") {
       fetch("http://localhost:5000/create-confluence-page", {
@@ -69,35 +78,55 @@ const FileUpload = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <label
-        htmlFor="page-title"
-        className="block font-medium text-gray-700 mb-2"
-      >
-        Job Title
-      </label>
-      <input
-        id="page-title"
-        type="text"
-        placeholder="Enter your job title"
-        className="border border-gray-400 p-2 w-full rounded-lg"
-        value={jobTitle}
-        onChange={(event) => setJobTitle(event.target.value)}
-      />
-      <label
-        htmlFor="job-title"
-        className="block font-medium text-gray-700 my-2"
-      >
-        Page Title
-      </label>
-      <input
-        id="job-title"
-        type="text"
-        placeholder="Enter your page title"
-        className="border border-gray-400 p-2 w-full rounded-lg"
-        value={pageTitle}
-        onChange={(event) => setPageTitle(event.target.value)}
-      />
-      <div className="flex items-center mt-2">
+        <div className="flex flex-col md:flex-row justify-between md:space-x-4 space-y-4 md:space-y-0">
+            <div className="flex-1">
+                <label htmlFor="name" className="block font-medium text-gray-700 mb-2">Name</label>
+                <input
+                    id="name"
+                    type="text"
+                    placeholder="Enter your name"
+                    className="border border-gray-400 p-2 w-full rounded-lg"
+                    value={userName}
+                    onChange={(event) => setUserName(event.target.value)}
+                />
+            </div>
+            <div className="flex-1">
+                <label htmlFor="email" className="block font-medium text-gray-700 mb-2">Email</label>
+                <input
+                    id="email"
+                    type="text"
+                    placeholder="Enter your email"
+                    className="border border-gray-400 p-2 w-full rounded-lg"
+                    value={userEmail}
+                    onChange={(event) => setUserEmail(event.target.value)}
+                />
+            </div>
+        </div>
+        <div className="flex flex-col md:flex-row justify-between md:space-x-4 space-y-4 md:space-y-0">
+            <div className="flex-1">
+                <label htmlFor="job-title" className="block font-medium text-gray-700 mb-2">Job Title</label>
+                <input
+                    id="job-title"
+                    type="text"
+                    placeholder="Enter your job title"
+                    className="border border-gray-400 p-2 w-full rounded-lg"
+                    value={jobTitle}
+                    onChange={(event) => setJobTitle(event.target.value)}
+                />
+            </div>
+            <div className="flex-1">
+                <label htmlFor="page-title" className="block font-medium text-gray-700 mb-2">Page Title</label>
+                <input
+                    id="page-title"
+                    type="text"
+                    placeholder="Enter your page title"
+                    className="border border-gray-400 p-2 w-full rounded-lg"
+                    value={pageTitle}
+                    onChange={(event) => setPageTitle(event.target.value)}
+                />
+            </div>
+        </div>
+        <div className="flex items-center mt-2">
         <label className="inline-flex items-center mr-6">
           <input
             type="radio"
