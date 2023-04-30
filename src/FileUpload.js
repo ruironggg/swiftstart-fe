@@ -19,7 +19,16 @@ const FileUpload = () => {
   const onDrop = useCallback((acceptedFiles, fileRejections) => {
     setIsLoading(true);
     console.log({ acceptedFiles, fileRejections });
-    setSelectedFile(acceptedFiles[0]);
+    const file = acceptedFiles[0];
+
+    if (file.size > 100000000) {
+      alert(
+        "File size is too big. Please upload a file that is less than 100MB."
+      );
+      setSelectedFile("");
+    } else {
+      setSelectedFile(acceptedFiles[0]);
+    }
     setIsLoading(false);
   }, []);
 
@@ -76,9 +85,16 @@ const FileUpload = () => {
     setIsLoading(false);
   };
 
-  const bytesToMegabytes = (bytes) => {
-    const megabytes = bytes / 1000000;
-    return Math.trunc(megabytes * 1000) / 1000;
+  const formatBytes = (bytes) => {
+    // if the byte is less than 1 MB, convert it to KB
+    if (bytes < 1000000) {
+      const kilobytes = bytes / 1000;
+      return `${Math.trunc(kilobytes * 1000) / 1000}KB`;
+    } else {
+      // otherwise, convert it to MB
+      const megabytes = bytes / 1000000;
+      return `${Math.trunc(megabytes * 1000) / 1000}MB`;
+    }
   };
 
   return (
@@ -228,7 +244,7 @@ const FileUpload = () => {
                     <>
                       <span className="font-semibold">File Size</span>:{" "}
                       {/* truncate the file to 3 decimal places */}
-                      {bytesToMegabytes(selectedFile.size)}MB
+                      {formatBytes(selectedFile.size)}
                     </>
                   ) : (
                     "ZIP (MAX. 100MB)"
