@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import PacmanLoader from "react-spinners/PacmanLoader";
+import Loader from "./Loader";
 
 const FileUpload = () => {
   const [selectedFile, setSelectedFile] = useState("");
@@ -204,14 +204,7 @@ const FileUpload = () => {
           } flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600`}
         >
           {isLoading ? (
-            <div
-              className={`flex flex-col justify-center items-center h-screen`}
-            >
-              <PacmanLoader color={"#06d6a0"} loading={true} />
-              <p className="text-center mt-4 text-[#06d6a0] font-medium">
-                Generating documentation...
-              </p>
-            </div>
+            <Loader />
           ) : (
             <>
               <input {...getInputProps()} />
@@ -293,7 +286,7 @@ const FileUpload = () => {
       {generatedLink && (
         <button
           onClick={() => {
-            window.open(generatedLink, "_blank");
+            window.open(generatedLink, "_blank", "noopener noreferrer");
           }}
           className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
         >
